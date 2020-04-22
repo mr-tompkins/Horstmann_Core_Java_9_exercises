@@ -11,7 +11,7 @@ import static java.util.Comparator.comparing;
 
 public final class MaxLengthStringsFinder {
 
-    private final static Integer INTEGER_STUB = 0;
+    private final static Integer INTEGER_DUMMY = 0;
 
     public static List<String> find(Stream<String> strings) {
         return strings
@@ -19,7 +19,7 @@ public final class MaxLengthStringsFinder {
                 .entrySet()
                 .stream()
                 .max(comparing(Map.Entry::getKey))
-                .orElse(new SimpleImmutableEntry<Integer, List<String>>(INTEGER_STUB, Collections.EMPTY_LIST))
+                .orElse(new SimpleImmutableEntry<Integer, List<String>>(INTEGER_DUMMY, Collections.EMPTY_LIST))
                 .getValue();
     }
 }
