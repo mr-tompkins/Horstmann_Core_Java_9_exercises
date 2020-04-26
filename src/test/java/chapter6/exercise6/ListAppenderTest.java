@@ -1,6 +1,8 @@
 package chapter6.exercise6;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -16,10 +18,13 @@ public class ListAppenderTest {
 
     private final List<Derived> source;
     private final List<Base> dest;
+    @Rule
+    public ExpectedException expected;
 
     public ListAppenderTest() {
         source = createSource();
         dest = createDestination();
+        expected = ExpectedException.none();
     }
 
     @Test
@@ -34,6 +39,18 @@ public class ListAppenderTest {
         ListAppender.append2(source, dest);
 
         assertThat(getObjectsClassesInDest(dest), equalTo(EXPECTED_OBJECTS_CLASSES));
+    }
+
+    @Test
+    public void whenFirstArgumentIsNull_thenThrowsException() {
+        expected.expect(IllegalArgumentException.class);
+        ListAppender.append1(null, dest);
+    }
+
+    @Test
+    public void whenSecondArgumentIsNull_thenThrowsException() {
+        expected.expect(IllegalArgumentException.class);
+        ListAppender.append1(source, null);
     }
 
     private List<String> getObjectsClassesInDest(final List<? extends Base> dest) {
