@@ -29,4 +29,15 @@ public final class Arrays {
                 .flatMap(Function.identity())
                 .max(T::compareTo);
     }
+
+    public static <T extends Comparable<? super T>> Optional<T> min(final List<Pair<T>> pairs) {
+        if (pairs == null) {
+            return Optional.empty();
+        }
+        return pairs
+                .parallelStream()
+                .map(p -> Stream.of(p.getFirst(), p.getSecond()))
+                .flatMap(Function.identity())
+                .min(T::compareTo);
+    }
 }
